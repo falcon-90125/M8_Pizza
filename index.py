@@ -1,53 +1,55 @@
-# class Product:
-#     def __init__(self, title, calorific, cost):
-#         self.title = title
-#         self.calorific = calorific
-#         self.cost = cost
-class Product:
+# Программа для создания пиццы из ингредиентов с возможностью расчета общей калорийности и себестоимости конечного продукта.
+
+class Product(): # У продукта есть характеристики: название, калорийность и себестоимость. 
     def __init__(self, title, calorific, cost):
-        if title:
-            self.title = title
+        if title: # Не может быть пустым
+            self.title = title # название
         else:
-            print("Отсутствует значение атрибута title")
-        # if not calorific:
-        #     pass
-        # if not cost:
-        #     pass
-        self.calorific = calorific
-        self.cost = cost
-    
-class Ingredient:
+            raise ValueError('Отсутствует значение атрибута title')
+        
+        if calorific <0: #калорийность. Только положительное число
+            raise ValueError('Значение атрибута calorific может быть только положительным')
+        else:
+            self.calorific = calorific #калорийность
+        
+        if cost <0: #себестоимость. Только положительное число
+            raise ValueError('Значение атрибута cost может быть только положительным')
+        else:
+            self.cost = cost
+
+class Ingredient: #product - класс Product,  weight - вес
     def __init__(self, product, weight):
         self.product = product
-        self.weight = weight
+        if weight <0: # Только положительное число
+            raise ValueError('Значение атрибута weight может быть только положительным')
+        else:
+            self.weight = weight
     
-    def get_calorific(self):
+    def get_calorific(self): #калорийность ингредиента
         return self.weight / 100 * self.product.calorific
 
-    def get_cost(self):
+    def get_cost(self): #себестоимость ингредиента
         return self.weight / 100 * self.product.cost
 
-
-class Pizza(Product):
+class Pizza(Product): # У пиццы есть название и ингредиенты - Список значений класса Ingredient
     def __init__(self, title, ingredients = []):
-        # self.title = super().__init__(self, title, cost=0)
-        self.title = title
+        super().__init__(title, calorific=0, cost=0) #название берём по методу __init__ от родительского класса Product, чтобы избежать дублирование кода
         self.ingredients = ingredients
 
-    def get_calorific(self):
+    def get_calorific(self): #общая калорийность пиццы
         sum_ingredients = 0
         for i in self.ingredients:
             sum_ingredients += i.get_calorific()
         return sum_ingredients
 
-    def get_cost(self):
+    def get_cost(self): #общая себестоимости пиццы
         sum_cost = 0
         for i in self.ingredients:
             sum_cost += i.get_cost()
         return sum_cost
 
-    def __str__(self):
-        if len(self.ingredients) < 3:
+    def __str__(self): #выводиться название пиццы, общая калорийность и общая себестоимость
+        if len(self.ingredients) < 3: #Если Список значений класса Ingredient меньше 3, то пицца лайт
             print_pizza = f'{self.title} лайт ({self.get_calorific()} kkal) - {self.get_cost()} руб'
         else:
             print_pizza = f'{self.title} ({self.get_calorific()} kkal) - {self.get_cost()} руб'
@@ -55,7 +57,7 @@ class Pizza(Product):
 
 
 # Создаем продукты с указанием названия, калорийности продукта и его себестоимости
-dough_product = Product('Тесто', 200, 20)
+dough_product = Product('Томат', 200, 20)
 tomato_product = Product('Помидор', 100, 50)
 cheese_product = Product('Сыр', 100, 120)
 
@@ -69,6 +71,6 @@ cheese_ingredient = Ingredient(cheese_product, 100)
 pizza_margarita = Pizza('Маргарита', [dough_ingredient, tomato_ingredient, cheese_ingredient])
 pizza_margarita_light = Pizza('Маргарита', [dough_ingredient, cheese_ingredient])
 
-# # Выводим экземпляр пиццы
+# Выводим экземпляр пиццы
 print(pizza_margarita)
 print(pizza_margarita_light)
