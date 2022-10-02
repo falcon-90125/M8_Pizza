@@ -1,7 +1,7 @@
 # Программа для создания пиццы из ингредиентов с возможностью расчета общей калорийности и себестоимости конечного продукта.
 
 class Product(): # У продукта есть характеристики: название, калорийность и себестоимость. 
-    def __init__(self, title, calorific, cost):
+    def __init__(self, title='', calorific=0, cost=0):
         if title: # Не может быть пустым
             self.title = title # название
         else:
@@ -18,7 +18,7 @@ class Product(): # У продукта есть характеристики: н
             self.cost = cost
 
 class Ingredient: #product - класс Product,  weight - вес
-    def __init__(self, product, weight):
+    def __init__(self, product, weight=0):
         self.product = product
         if weight <0: # Только положительное число
             raise ValueError('Значение атрибута weight может быть только положительным')
