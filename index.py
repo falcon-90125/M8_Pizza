@@ -1,10 +1,21 @@
+# class Product:
+#     def __init__(self, title, calorific, cost):
+#         self.title = title
+#         self.calorific = calorific
+#         self.cost = cost
 class Product:
     def __init__(self, title, calorific, cost):
-        self.title = title
+        if title:
+            self.title = title
+        else:
+            print("Отсутствует значение атрибута title")
+        # if not calorific:
+        #     pass
+        # if not cost:
+        #     pass
         self.calorific = calorific
         self.cost = cost
-
-
+    
 class Ingredient:
     def __init__(self, product, weight):
         self.product = product
@@ -17,8 +28,9 @@ class Ingredient:
         return self.weight / 100 * self.product.cost
 
 
-class Pizza:
+class Pizza(Product):
     def __init__(self, title, ingredients = []):
+        # self.title = super().__init__(self, title, cost=0)
         self.title = title
         self.ingredients = ingredients
 
