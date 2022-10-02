@@ -1,11 +1,11 @@
 # Программа для создания пиццы из ингредиентов с возможностью расчета общей калорийности и себестоимости конечного продукта.
 
 class Product(): # У продукта есть характеристики: название, калорийность и себестоимость. 
-    def __init__(self, title='', calorific=0, cost=0):
-        if title: # Не может быть пустым
-            self.title = title # название
-        else:
+    def __init__(self, title, calorific, cost):
+        if title == '' or title.isspace(): # Не может быть пустым
             raise ValueError('Отсутствует значение атрибута title')
+        else:
+            self.title = title # название
         
         if calorific <0: #калорийность. Только положительное число
             raise ValueError('Значение атрибута calorific может быть только положительным')
